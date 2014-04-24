@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>测试select功能</title>
+    <style>
+        .hidden{display: none;}
+    </style>
+    <script src="https://code.jquery.com/jquery-1.11.0.js"></script>
+</head>
+<body>
+    <select></select>
+    <select></select>
+    <script>
+        var result = [{
+            id: '001', name: 'cycle001'
+        }, {
+            id: '002', name: 'cycle002'
+        }, {
+            id: '003', name: 'cycle003'
+        }, {
+            id: '004', name: 'cycle004'
+        }, {
+            id: '005', name: 'cycle005'
+        }, {
+            id: '006', name: 'cycle006'
+        }];
+
+        var selecteds = [];
+
+        $('body').delegate('select', 'mouseenter', function(){
+            console.log('mouse enter...');       
+
+            var str = '<option value="">请选择</option>';
+            for(var i = 0; i < 6; i++){
+                if(selecteds.indexOf(result[i].id) < 0)
+                    str += '<option value="' + result[i].id + '">' + result[i].name + '</option>';
+                else
+                    str += '<option class="hidden" value="' + result[i].id + '">' + result[i].name + '</option>';
+            }
+            $('select').html(str);
+
+            $('select').each(function(index){
+                $(this).val(selecteds[index]);
+            });
+        });
+
+        $('body').delegate('select', 'change', function(){
+            console.log('select change...');            
+
+            $('select').each(function(index){
+                selecteds[index] = $(this).val();
+            });
+        });
+    </script>
+</body>
+</html>
